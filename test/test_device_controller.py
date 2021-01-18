@@ -1,8 +1,8 @@
 import unittest
 
-from .device_controller import DeviceController
-from ..structure.device.pc import PC
-from ..structure.device.router import Router
+from src.controller.device_controller import DeviceController
+from src.structure.device.pc import PC
+from src.structure.device.router import Router
 
 
 class TestDeviceController(unittest.TestCase):
