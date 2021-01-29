@@ -7,7 +7,7 @@ class Game_Controller:
         self.current_device = current_device
         self.commands = {"connect": self.connect, "where_am_i": self.print_current_device}
 
-    def start(self):
+    def start(self):  # this needs a refactor for more straight forward execution
         while True:
             user_input = input("What is your next command: ")
 
@@ -18,11 +18,19 @@ class Game_Controller:
             for arg in user_input_divide[1:]:
                 arguments = arguments + '"' + arg + '",'
 
+            if arguments:
+                executed_method = command + "(" + arguments[:-1] + ")"
+            else:
+                executed_method = command + "()"
+
             try:
-                if arguments:
-                    self.commands[command](eval(arguments[:-1]))
+                if command in self.commands.keys():
+                    eval(executed_method, {'__builtins__': None}, self.commands)
                 else:
-                    self.commands[command]()
+                    print(
+                        eval(executed_method, {'__builtins__': None}, self.current_device.programs)
+                    )
+
             except Exception as error:
                 print("Command invalid " + str(error))
 
