@@ -5,6 +5,7 @@ class Device:
         self.address = address
         self.credentials = credentials
         self.status = status
+        self.commands = {"info": self.__str__}
 
     def __str__(self):
         return (
@@ -23,3 +24,6 @@ class Device:
             + "\n->Status: "
             + self.status
         )
+
+    def wake_up(self):
+        pass

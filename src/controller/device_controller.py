@@ -5,7 +5,6 @@ class DeviceController:
     def get_device(self, current_address, destination_address):
         current_device = self.devices[current_address]
 
-        # What if where are connecting froma router?
         while True:
 
             if current_device.address == destination_address:
