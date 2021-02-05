@@ -1,4 +1,5 @@
 from .device import Device
+from ...utils.exceptions import RouterException
 
 
 class Router(Device):
@@ -33,7 +34,7 @@ class Router(Device):
             if parameters[0] in self.routes.keys():
                 output = "connected by: " + self.routes[parameters[0]]
             else:
-                raise Exception(
+                raise RouterException(
                     "Route does not exist here"
                 )
 
@@ -42,13 +43,13 @@ class Router(Device):
                 del self.routes[parameters[0]]
                 output = parameters[0] + " successfully deleted"
             else:
-                raise Exception(
+                raise RouterException(
                     "Route does not exist here"
                 )
 
         if(action == "create"):
             if parameters[0] in self.routes.keys():
-                raise Exception(
+                raise RouterException(
                     "Route already exist, espcify another one"
                 )
             else:

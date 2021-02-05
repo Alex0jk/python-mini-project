@@ -1,4 +1,7 @@
-class DeviceController:
+from ..utils.exceptions import DeviceSearchException
+
+
+class DevicesController:
     def __init__(self, devices):
         self.devices = devices  # It is managed as a dictionary (address, device)
 
@@ -14,10 +17,20 @@ class DeviceController:
                 current_device = self.devices[current_device.connected_to]
 
             elif destination_address in current_device.connected_devices:
+                if (
+                    self.devices[destination_address].status == "Inactive"
+                    and current_device.device_type != "Switch"
+                ):
+                    raise DeviceSearchException(
+                        "This devices has been found,"
+                        + "but it is currently inactive"
+                        + "and can only be accessed from a connected switch"
+                    )
+
                 return self.devices[destination_address]
 
             elif current_device.device_type == "Switch":
-                raise Exception(
+                raise DeviceSearchException(
                     "This devices has not been found.\n"
                     + "Check if the address is correct or "
                     + "if it is accessible from the current Switch"
@@ -27,7 +40,7 @@ class DeviceController:
                 if destination_address in current_device.routes.keys():
                     current_device = self.devices[current_device.routes[destination_address]]
                 else:
-                    raise Exception(
+                    raise DeviceSearchException(
                         "Route to this devices has not been found.\n"
                         + "Check if the address is correct or a route "
                         + "to the device exists from where you are."
