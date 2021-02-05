@@ -1,3 +1,6 @@
+from ...utils.exceptions import DeviceException
+
+
 class Device:
     def __init__(self, device_type, name, address, credentials, status):
         self.device_type = device_type
@@ -27,3 +30,13 @@ class Device:
 
     def wake_up(self):
         pass
+
+    def login(self):
+        user = input("Device username: ")
+        password = input("Device password: ")
+        if self.credentials.check_correct_credentials(user, password):
+            return True
+        else:
+            raise DeviceException(
+                "Incorrect credentials, you may not access this device"
+            )

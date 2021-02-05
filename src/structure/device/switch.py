@@ -10,5 +10,5 @@ class Switch(Device):
         return (
             super(Switch, self).__str__()
             + "\nThis device is directly connected to the following addresses: "
-            + self.connected_devices
+            + ", ".join(self.connected_devices)
         )
