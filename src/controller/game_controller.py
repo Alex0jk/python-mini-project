@@ -1,42 +1,31 @@
 import functools
+import sys
+from ..utils.utility_classes import Singleton
+from ..data.network import network
+from ..controller.device_controller import DeviceController
 
 
-class Game_Controller:
-    def __init__(self, device_controller, current_device):
-        self.device_controller = device_controller
-        self.current_device = current_device
-        self.commands = {"connect": self.connect, "where_am_i": self.print_current_device}
+class Game_Controller():
+    def __init__(self):
+        self.device_controller = DeviceController(network)
+        self.current_device = network["red-p-3"]
+        self.commands = {
+            "connect": self.connect,
+            "where_am_i": self.print_current_device,
+            "exit": self.exit_game
+        }
 
-    def start(self):  # this needs a refactor for more straight forward execution
-        while True:
-            user_input = input("What is your next command: ")
-
-            user_input_divide = user_input.split()
-            command = user_input_divide[0]
-            arguments = ""
-
-            for arg in user_input_divide[1:]:
-                arguments = arguments + '"' + arg + '",'
-
-            if arguments:
-                executed_method = command + "(" + arguments[:-1] + ")"
+    def execute(self, command_name, command_to_execute):
+        try:
+            if command_name in self.commands.keys():
+                eval(command_to_execute, {'__builtins__': None}, self.commands)
             else:
-                executed_method = command + "()"
+                print(
+                    eval(command_to_execute, {'__builtins__': None}, self.current_device.commands)
+                )
 
-            try:
-                if command in self.commands.keys():
-                    eval(executed_method, {'__builtins__': None}, self.commands)
-                else:
-                    print(
-                        eval(executed_method, {'__builtins__': None}, self.current_device.programs)
-                    )
-
-            except Exception as error:
-                print("Command invalid " + str(error))
-
-            if user_input == "exit":
-                print("session end")
-                return
+        except Exception as error:
+            print("Command invalid " + str(error))
 
     def connect(self, destination):
         print(destination)
@@ -49,3 +38,8 @@ class Game_Controller:
 
     def print_current_device(self):
         print(self.current_device)
+
+    def exit_game(self):
+        sys.exit()
+
+    __metaclass__ = Singleton

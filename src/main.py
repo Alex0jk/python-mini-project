@@ -1,8 +1,21 @@
 from .controller.game_controller import Game_Controller
-from .controller.device_controller import DeviceController
-from .data.network import network
 
-game = Game_Controller(DeviceController(network), network["red-p-3"])
+game = Game_Controller()
 
 if __name__ == "__main__":
-    game.start()
+    while True:
+        user_input = input("What is your next command: ")
+
+        user_input_divide = user_input.split()
+        command = user_input_divide[0]
+        arguments = ""
+
+        for arg in user_input_divide[1:]:
+            arguments = arguments + '"' + arg + '",'
+
+        if arguments:
+            executed_method = command + "(" + arguments[:-1] + ")"
+        else:
+            executed_method = command + "()"
+
+        game.execute(command, executed_method)

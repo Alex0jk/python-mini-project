@@ -6,9 +6,9 @@ class Router(Device):
         super(Router, self).__init__(device_type, name, address, credentials, status)
         # connected devices is a set of addresses connected to the router
         self.connected_devices = connected_devices
-        # routes is dict where  key: destionation, value: address to lookup for destination
+        # routes is dict where  key: destination, value: address to lookup for destination
         self.routes = routes
-        self.programs = {"routes": self.routing}
+        self.commands = {**self.commands, **{"routes": self.routing}}
 
     def routing(self, action="help", *parameters):
         output = ""
@@ -56,3 +56,10 @@ class Router(Device):
                 output = parameters[0] + " connected by " + parameters[1]
 
         return output
+
+    def __str__(self):
+        return (
+            super(Router, self).__str__()
+            + "\nThis device is directly connected to the following addresses: "
+            + ", ".join(self.connected_devices)
+        )
