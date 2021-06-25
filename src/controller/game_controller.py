@@ -9,20 +9,20 @@ from ..controller.device_controller import DevicesController
 class Game_Controller():
     def __init__(self):
         self.device_controller = DevicesController(network)
-        self.current_device = network["red-p-3"]
+        self.current_device = network["lobby-pc"]
         self.commands = {
             "connect": self.connect,
             "where_am_i": self.print_current_device,
             "exit": self.exit_game
         }
 
-    def execute(self, command_name, command_to_execute):
+    def execute(self, command_tuple):
         try:
-            if command_name in self.commands.keys():
-                print(eval(command_to_execute, {'__builtins__': None}, self.commands))
+            if command_tuple[0] in self.commands.keys():
+                print(eval(command_tuple[1], {'__builtins__': None}, self.commands))
             else:
                 print(
-                    eval(command_to_execute, {'__builtins__': None}, self.current_device.commands)
+                    eval(command_tuple[1], {'__builtins__': None}, self.current_device.commands)
                 )
 
         except (DeviceException, DeviceSearchException, RouterException) as error:
