@@ -1,5 +1,5 @@
-from .device import Device
-from ...utils.exceptions import RouterException
+from src.structure.device.device import Device
+from src.utils.exceptions import RouterException
 
 
 class Router(Device):

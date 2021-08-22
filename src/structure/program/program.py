@@ -1,4 +1,4 @@
-from ...utils.input_processing import input_to_command_transform
+from src.utils.input_processing import input_to_command_transform
 
 
 class Program:

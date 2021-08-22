@@ -1,4 +1,4 @@
-from .program import Program
+from src.structure.program.program import Program
 
 
 class Chat(Program):

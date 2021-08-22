@@ -1,4 +1,4 @@
-from ...utils.exceptions import DeviceException
+from src.utils.exceptions import DeviceException
 
 
 class Device:

@@ -1,4 +1,4 @@
-from .device import Device
+from src.structure.device.device import Device
 
 
 class PC(Device):

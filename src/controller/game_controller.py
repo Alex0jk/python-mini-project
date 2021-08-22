@@ -1,9 +1,9 @@
 import functools
 import sys
-from ..utils.utility_classes import Singleton
-from ..utils.exceptions import DeviceException, DeviceSearchException, RouterException
-from ..data.network import network
-from ..controller.device_controller import DevicesController
+from src.utils.utility_classes import Singleton
+from src.utils.exceptions import DeviceException, DeviceSearchException, RouterException
+from src.data.network import network
+from src.controller.device_controller import DevicesController
 
 
 class Game_Controller():
@@ -36,6 +36,8 @@ class Game_Controller():
             self.current_device.address, destination
         )
         searched_device.login()
+
+        #TODO - Do not ask for credentials if connected to the same device
 
         self.current_device = searched_device
         return self.current_device.__str__()

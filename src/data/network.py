@@ -1,8 +1,12 @@
-from ..structure.device.switch import Switch
-from ..structure.device.pc import PC
-from ..structure.device.router import Router
-from ..structure.auxiliar.credential import Credential
-from ..structure.program.chats import Chat
+from src.structure.device.switch import Switch
+from src.structure.device.pc import PC
+from src.structure.device.router import Router
+from src.structure.auxiliar.credential import Credential
+from src.structure.program.chats import Chat
+
+programs = {
+    "chat-lobby-pc": Chat("chat")
+}
 
 network = {
     "lobby-router": Router(
@@ -43,7 +47,7 @@ network = {
         credentials=Credential("admin", "admin"),
         status="Active",
         connected_to="lobby-router",
-        programs={"chat": Chat("chat")}
+        programs={"chat": programs["chat-lobby-pc"]}
     ),
     "lobby-info": PC(
         device_type="Computer",

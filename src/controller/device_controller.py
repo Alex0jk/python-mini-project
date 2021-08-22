@@ -1,4 +1,4 @@
-from ..utils.exceptions import DeviceSearchException
+from src.utils.exceptions import DeviceSearchException
 
 
 class DevicesController:
